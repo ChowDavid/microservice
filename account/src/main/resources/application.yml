@@ -18,8 +18,9 @@ spring:
 
 eureka:
   client:
+    enabled : ${EUREKA_ENABLED:false}
     healthcheck:
-      enabled = true
+      enabled : true
     statusPageUrlPath: ${server.servletPath}/actuator/info
     healthCheckUrlPath: ${server.servletPath}/actuator/health
     serviceUrl:

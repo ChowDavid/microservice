@@ -17,8 +17,7 @@ public class LoanController {
 
     @Autowired
     private LoanRepository loanRepository;
-    @Autowired
-    private 
+
 
     @PostMapping("/myLoans")
     public List<Loan> getLoanDetails(@RequestBody Customer customer){
