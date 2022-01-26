@@ -7,3 +7,31 @@ docker push davidchow/account
 docker push davidchow/loan
 docker push davidchow/card
 ```
+
+## docker-compose up
+```
+docker-compose up
+docker-compose scale accounts=3
+docker-compose ps
+```
+
+## docker-compose create more then one instance ports allocation
+```
+ports:
+  - "8080-8084:8080"
+  
+```
+
+## docker compose pass service discovery to account 
+```
+services:
+  discovery:
+  ...
+  accounts:
+    environment:
+      EUREKA_SERVER: http://discovery:8070/eureka/
+ ```
+ ### then in account the env variable will be pass in application.yml as 
+ ```
+  eureka.client.servieUrl.defautZone: ${EUREKA_SERVER:http://localhost:8070/eureka} ```
+ 
