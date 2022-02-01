@@ -10,9 +10,9 @@ spring:
     console:
       enabled: true
   application:
-    name: ${SPRING_APPLICATION_NAME?:account}
+    name: ${SPRING_APPLICATION_NAME:account}
   profiles:
-    active: ${SPRING_PROFILES_ACTIVE?:prod}
+    active: ${SPRING_PROFILES_ACTIVE:prod}
   config:
     import: ${SPRING_CONFIG_IMPORT?:optional:configserver:http://localhost:8071}
 

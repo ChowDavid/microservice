@@ -1,14 +1,24 @@
-# build docker from Dockerfile
+# Build process, create jar and create docker images.
 ```
-mvn clean package
-docker images
-docker push davidchow/account:latest
-docker push davidchow/card:latest
-docker push davidchow/loan:latest
-docker push davidchow/configserver:latest
+mvn clean package -T 5
 ```
+# Run
+```
+cd docker-compose
+cd prod
+docker-compose up
 
-run all
 ```
-../docker-compose/docker_compose up -d
+# Check
+```
+// Eureke
+http://localhost:8070
+// Config
+http://localhost:8071
+// account
+http://localhost:8080/actautor
+// card
+http://localhost:9000/actautor
+// loan
+http://localhost:8090/actautor
 ```

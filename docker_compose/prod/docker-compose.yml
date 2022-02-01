@@ -38,7 +38,7 @@ services:
       discovery:
         condition: service_healthy
     environment:
-      SPRING_APPLIATION_NAME: account
+      SPRING_APPLICATION_NAME: accounts
       SPRING_PROILES_ACTIVE: prod
       SPRING_CONFIG_IMPORT: configserver:http://config:8071/
       EUREKA_SERVER: http://discovery:8070/eureka/
@@ -54,7 +54,7 @@ services:
       discovery: 
         condition: service_healthy
     environment:
-      SPRING_APPLIATION_NAME: loan
+      SPRING_APPLICATION_NAME: loans
       SPRING_PROILES_ACTIVE: prod
       SPRING_CONFIG_IMPORT: configserver:http://config:8071/
       EUREKA_SERVER: http://discovery:8070/eureka/
@@ -70,7 +70,7 @@ services:
       discovery: 
         condition: service_healthy
     environment:
-      SPRING_APPLIATION_NAME: card
+      SPRING_APPLICATION_NAME: cards
       SPRING_PROILES_ACTIVE: prod
       SPRING_CONFIG_IMPORT: configserver:http://config:8071/
       EUREKA_SERVER: http://discovery:8070/eureka/
