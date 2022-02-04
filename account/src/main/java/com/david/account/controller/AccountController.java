@@ -6,8 +6,13 @@ import com.david.account.feign.LoansFeignClient;
 import com.david.account.model.Account;
 import com.david.account.model.Customer;
 import com.david.account.repository.AccountRepository;
+
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import io.github.resilience4j.retry.annotation.Retry;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,6 +31,8 @@ public class AccountController {
     @Autowired
     private LoansFeignClient loansFeignClient;
 
+    //@CircuitBreaker(name="detailsApiCall", fallbackMethod = "fallbackMethod")
+    @Retry(name="myRtry", fallbackMethod = "fallbackMethod")
     @PostMapping("/myAccount")
     public Account getAccountDetails(@RequestBody Customer customer){
         log.info(customer.toString());
@@ -39,6 +46,30 @@ public class AccountController {
         } else {
             return null;
         }
+    }
+    
+    private Account fallbackMethod(Customer customer, Throwable t) {
+    	log.info("fall back method was called");
+    	log.info(customer.toString());
+        log.info("config {}",config);
+        Optional<Account> account=accountRepository.findByCustomerId(customer.getCustomerId());
+        
+        if(account.isPresent()){
+            return account.get();
+        } else {
+            return null;
+        }
+    }
+    
+    @RateLimiter(name = "myRate", fallbackMethod = "fallbackRate")
+    @GetMapping("/getHello")
+    public String getHello() {
+    	return "Hello";
+    	
+    }
+    
+    private String fallbackRate(Throwable t) {
+    	return "FallBackRate";
     }
     
     

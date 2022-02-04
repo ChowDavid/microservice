@@ -47,7 +47,7 @@ services:
     image: davidchow/loan:latest
     mem_limit: 700m
     ports:
-      - "8090:8090"
+      - "8090-8099:8090"
     networks:
       - davidchow-network
     depends_on:
