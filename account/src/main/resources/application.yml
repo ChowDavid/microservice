@@ -50,6 +50,7 @@ management:
 endpoints:
   shutdown:
     enabled: true
+
     
 
 
