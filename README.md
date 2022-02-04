@@ -22,3 +22,6 @@ http://localhost:9000/actautor
 // loan
 http://localhost:8090/actautor
 ```
+
+# GateWayServer 
+- detail please check README.md on module gatewayserver

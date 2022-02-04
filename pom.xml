@@ -14,6 +14,7 @@
         <module>loan</module>
         <module>configServer</module>
         <module>discovery</module>
+        <module>gatewayserver</module>
     </modules>
 
 
