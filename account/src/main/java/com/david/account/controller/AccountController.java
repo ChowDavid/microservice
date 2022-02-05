@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
@@ -34,8 +35,9 @@ public class AccountController {
     //@CircuitBreaker(name="detailsApiCall", fallbackMethod = "fallbackMethod")
     @Retry(name="myRtry", fallbackMethod = "fallbackMethod")
     @PostMapping("/myAccount")
-    public Account getAccountDetails(@RequestBody Customer customer){
-        log.info(customer.toString());
+    public Account getAccountDetails(@RequestHeader("correlation-id") String header, @RequestBody Customer customer){
+        log.info("correlationId {}", header);
+    	log.info(customer.toString());
         log.info("config {}",config);
         Optional<Account> account=accountRepository.findByCustomerId(customer.getCustomerId());
         
@@ -48,7 +50,7 @@ public class AccountController {
         }
     }
     
-    private Account fallbackMethod(Customer customer, Throwable t) {
+    private Account fallbackMethod(String header, Customer customer, Throwable t) {
     	log.info("fall back method was called");
     	log.info(customer.toString());
         log.info("config {}",config);
