@@ -32,8 +32,8 @@ public class AccountController {
     @Autowired
     private LoansFeignClient loansFeignClient;
 
-    //@CircuitBreaker(name="detailsApiCall", fallbackMethod = "fallbackMethod")
-    @Retry(name="myRtry", fallbackMethod = "fallbackMethod")
+    @CircuitBreaker(name="detailsApiCall", fallbackMethod = "fallbackMethod")
+    //@Retry(name="myRtry", fallbackMethod = "fallbackMethod")
     @PostMapping("/myAccount")
     public Account getAccountDetails(@RequestHeader("correlation-id") String header, @RequestBody Customer customer){
         log.info("correlationId {}", header);

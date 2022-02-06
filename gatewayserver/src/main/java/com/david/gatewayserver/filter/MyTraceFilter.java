@@ -17,7 +17,7 @@ import reactor.core.publisher.Mono;
 @Slf4j
 @Order(1)
 @Component
-public class TraceFilter implements GlobalFilter {
+public class MyTraceFilter implements GlobalFilter {
 	
 	@Autowired
 	FilterUtility filterUtility;

@@ -34,4 +34,9 @@ services:
  ### then in account the env variable will be pass in application.yml as 
  ```
   eureka.client.servieUrl.defautZone: ${EUREKA_SERVER:http://localhost:8070/eureka} ```
- 
+
+### clean up docker image
+```
+docker system prune
+docker image prune
+``` 

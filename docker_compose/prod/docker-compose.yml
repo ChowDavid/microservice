@@ -1,8 +1,15 @@
 version: "3.8"
 services:
+  zipkin:
+    image: openzipkin/zipkin:latest
+    mem_limit: 200m
+    ports:
+      - "9411:9411"
+    networks:
+      - davidchow-network
   config:
     image: davidchow/configserver:latest
-    mem_limit: 700m
+    mem_limit: 200m
     ports:
       - "8071:8071"
     networks:
@@ -14,7 +21,7 @@ services:
       retries: 5
   discovery:
     image: davidchow/discovery:latest
-    mem_limit: 700m
+    mem_limit: 500m
     ports:
       - "8070:8070"
     networks:
@@ -29,7 +36,7 @@ services:
       retries: 5
   gatewayserver:
     image: davidchow/gatewayserver:latest
-    mem_limit: 700m
+    mem_limit: 500m
     ports:
       - "8072:8072"
     networks:
@@ -39,16 +46,17 @@ services:
         condition: service_healthy
     healthcheck:
       test: ["CMD-SHELL","curl http://localhost:8072/actuator"]
-      interval: 10s
-      timeout: 5s
+      interval: 20s
+      timeout: 10s
       retries: 5
     environment:
       SPRING_CONFIG_IMPORT: configserver:http://config:8071/
       EUREKA_SERVER: http://discovery:8070/eureka/
       EUREKA_ENABLED: "true"
+      ZIPKIN_SERVER: http://zipkin:9411
   accounts:
     image: davidchow/account:latest
-    mem_limit: 700m
+    mem_limit: 600m
     ports:
       - "8080-8085:8080"
     networks:
@@ -62,9 +70,10 @@ services:
       SPRING_CONFIG_IMPORT: configserver:http://config:8071/
       EUREKA_SERVER: http://discovery:8070/eureka/
       EUREKA_ENABLED: "true"
+      ZIPKIN_SERVER: http://zipkin:9411
   loans:
     image: davidchow/loan:latest
-    mem_limit: 700m
+    mem_limit: 600m
     ports:
       - "8090-8099:8090"
     networks:
@@ -78,6 +87,7 @@ services:
       SPRING_CONFIG_IMPORT: configserver:http://config:8071/
       EUREKA_SERVER: http://discovery:8070/eureka/
       EUREKA_ENABLED: "true"
+      ZIPKIN_SERVER: http://zipkin:9411
   cards:
     image: davidchow/card:latest
     mem_limit: 700m
@@ -94,6 +104,7 @@ services:
       SPRING_CONFIG_IMPORT: configserver:http://config:8071/
       EUREKA_SERVER: http://discovery:8070/eureka/
       EUREKA_ENABLED: "true"
+      ZIPKIN_SERVER: http://zipkin:9411
 networks:
   davidchow-network:
     driver: bridge
