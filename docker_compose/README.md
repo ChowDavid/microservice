@@ -45,3 +45,9 @@ docker image prune
 
 ### Running prometeus
 - http://localhost:9090
+
+### Config the Grafana
+- start the docker
+- localhost:3000
+- Config datasource as Prometheus
+- import dashboard 11378
