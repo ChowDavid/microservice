@@ -10,6 +10,7 @@ import com.david.account.repository.AccountRepository;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
+import io.micrometer.core.annotation.Timed;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +35,7 @@ public class AccountController {
 
     @CircuitBreaker(name="detailsApiCall", fallbackMethod = "fallbackMethod")
     //@Retry(name="myRtry", fallbackMethod = "fallbackMethod")
+    @Timed(value="getAccountDetails.time", description="Custom metric forAccount Details")
     @PostMapping("/myAccount")
     public Account getAccountDetails(@RequestHeader("correlation-id") String header, @RequestBody Customer customer){
         log.info("correlationId {}", header);

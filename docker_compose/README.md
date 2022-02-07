@@ -40,3 +40,8 @@ services:
 docker system prune
 docker image prune
 ``` 
+### running Zipkin
+- http://localhost:9411
+
+### Running prometeus
+- http://localhost:9090

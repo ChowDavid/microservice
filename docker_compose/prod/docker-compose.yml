@@ -1,5 +1,13 @@
 version: "3.8"
 services:
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - davidchow-network
   zipkin:
     image: openzipkin/zipkin:latest
     mem_limit: 200m
@@ -58,7 +66,7 @@ services:
     image: davidchow/account:latest
     mem_limit: 600m
     ports:
-      - "8080-8085:8080"
+      - "8080:8080"
     networks:
       - davidchow-network
     depends_on:
@@ -75,7 +83,7 @@ services:
     image: davidchow/loan:latest
     mem_limit: 600m
     ports:
-      - "8090-8099:8090"
+      - "8090:8090"
     networks:
       - davidchow-network
     depends_on:
